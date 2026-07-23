@@ -33,8 +33,8 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   if (!product) {
     return (
       <div className="pt-32 pb-20 text-center">
-        <h1 className="font-serif text-4xl text-gray-800 mb-4">Product Not Found</h1>
-        <Link href="/collections" className="text-emerald hover:underline">
+        <h1 className="font-serif text-4xl text-white mb-4">Product Not Found</h1>
+        <Link href="/collections" className="text-white hover:underline">
           Back to Collections
         </Link>
       </div>
@@ -42,11 +42,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
   }
 
   return (
-    <div className="pt-24 pb-20 px-6 lg:px-8 bg-white">
+    <div className="pt-24 pb-20 px-6 lg:px-8 bg-black">
       <div className="max-w-7xl mx-auto">
         <Link
           href="/collections"
-          className="inline-flex items-center gap-2 text-emerald/60 hover:text-emerald text-sm tracking-wider mb-10 transition-colors"
+          className="inline-flex items-center gap-2 text-white/60 hover:text-white text-sm tracking-wider mb-10 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to Collections
@@ -84,31 +84,31 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             transition={{ duration: 0.7, delay: 0.2 }}
             className="flex flex-col justify-center"
           >
-            <p className="text-xs tracking-[0.3em] uppercase text-emerald/50 mb-3">
+            <p className="text-xs tracking-[0.3em] uppercase text-white/40 mb-3">
               {product.category}
             </p>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+            <h1 className="font-serif text-4xl md:text-5xl font-bold text-white mb-4">
               {product.name}
             </h1>
-            <div className="h-px w-16 bg-emerald/30 mb-6" />
-            <p className="text-gray-600 text-lg leading-relaxed font-light mb-8">
+            <div className="h-px w-16 bg-white/30 mb-6" />
+            <p className="text-white/60 text-lg leading-relaxed font-light mb-8">
               {product.description}
             </p>
             <p className="font-serif text-4xl emerald-gradient-text mb-4">
               ₹{product.price.toLocaleString()}
             </p>
             {product.weight && (
-              <p className="text-gray-500 text-sm mb-10">
+              <p className="text-white/50 text-sm mb-10">
                 Weight: {product.weight}g
               </p>
             )}
 
             <div className="flex gap-4 mb-10">
-              <button className="flex-1 py-4 bg-emerald text-black font-serif text-sm tracking-[0.2em] uppercase hover:bg-emerald-light transition-colors duration-300 flex items-center justify-center gap-2">
+              <button className="flex-1 py-4 bg-white text-black font-serif text-sm tracking-[0.2em] uppercase hover:bg-white/90 transition-colors duration-300 flex items-center justify-center gap-2">
                 <ShoppingBag className="w-4 h-4" />
                 Add to Bag
               </button>
-              <button className="w-14 border border-emerald/30 text-emerald hover:bg-emerald/10 transition-colors duration-300 flex items-center justify-center">
+              <button className="w-14 border border-white/30 text-white hover:bg-white/10 transition-colors duration-300 flex items-center justify-center">
                 <Heart className="w-5 h-5" />
               </button>
             </div>
@@ -121,10 +121,10 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               ].map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="text-center p-4 border border-emerald/10"
+                  className="text-center p-4 border border-white/10"
                 >
-                  <Icon className="w-5 h-5 text-emerald/60 mx-auto mb-2" />
-                  <p className="text-gray-500 text-[10px] tracking-wider uppercase">
+                  <Icon className="w-5 h-5 text-white/60 mx-auto mb-2" />
+                  <p className="text-white/40 text-[10px] tracking-wider uppercase">
                     {label}
                   </p>
                 </div>

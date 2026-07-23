@@ -3,21 +3,63 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import emailjs from '@emailjs/browser';
 
 const info = [
-  { icon: MapPin, label: "Visit Us", value: "12 Rue du Rhône, Geneva, Switzerland" },
-  { icon: Phone, label: "Call Us", value: "+41 22 310 1892" },
-  { icon: Mail, label: "Email Us", value: "concierge@aurum.com" },
-  { icon: Clock, label: "Hours", value: "Mon - Sat: 10am - 7pm" },
+  { icon: MapPin, label: "Visit Us", value: "77/79, Sutariya Building, 3rd Floor, Dhanji St, Zaveri Bazaar, Mumbai, Maharashtra 400003" },
+  { icon: Phone, label: "Call Us", value: "+91 8888625378" },
+  { icon: Mail, label: "Email Us", value: "varahijewelsmumbai@gmail.com" },
+  { icon: Clock, label: "Hours", value: "11:00 AM - 8:00 PM" },
 ];
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    message: ''
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setLoading(true);
+
+    try {
+      const templateParams = {
+        from_name: `${formData.firstName} ${formData.lastName}`,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'varahijewelsmumbai@gmail.com'
+      };
+
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+
+      if (response.status === 200) {
+        alert('Thank you for your message! we will get back to you soon.');
+        setSubmitted(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          message: ''
+        });
+        setTimeout(() => setSubmitted(false), 3000);
+      } else {
+        alert('Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      alert('Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -76,12 +118,16 @@ export default function ContactPage() {
                   type="text"
                   placeholder="First Name"
                   required
+                  value={formData.firstName}
+                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                   className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors"
                 />
                 <input
                   type="text"
                   placeholder="Last Name"
                   required
+                  value={formData.lastName}
+                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                   className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors"
                 />
               </div>
@@ -89,27 +135,25 @@ export default function ContactPage() {
                 type="email"
                 placeholder="Email Address"
                 required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors"
               />
-              <select className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream/50 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors appearance-none">
-                <option>Select Enquiry Type</option>
-                <option>Bespoke Commission</option>
-                <option>Product Enquiry</option>
-                <option>Appointment Request</option>
-                <option>General Enquiry</option>
-              </select>
               <textarea
                 rows={5}
                 placeholder="Your Message"
                 required
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors resize-none"
               />
               <button
                 type="submit"
-                className="w-full py-4 bg-gold text-black font-serif text-sm tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 flex items-center justify-center gap-2"
+                disabled={loading}
+                className="w-full py-4 bg-gold text-black font-serif text-sm tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send className="w-4 h-4" />
-                {submitted ? "Message Sent" : "Send Message"}
+                {loading ? "Sending..." : submitted ? "Message Sent" : "Send Message"}
               </button>
             </form>
           </motion.div>

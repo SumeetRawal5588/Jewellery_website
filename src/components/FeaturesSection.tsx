@@ -41,8 +41,8 @@ export default function FeaturesSection() {
             Why Choose Us
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-            <span className="gold-gradient-text">The AURUM</span>{" "}
-            <span className="text-cream">Promise</span>
+            <span className="text-white">The VARAHI JEWELS</span>{" "}
+            <span className="text-white/80">Promise</span>
           </h2>
           <div className="divider-gold max-w-xs mx-auto" />
         </motion.div>

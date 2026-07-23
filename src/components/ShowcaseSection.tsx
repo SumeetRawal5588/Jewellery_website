@@ -50,7 +50,7 @@ export default function ShowcaseSection() {
             </h2>
             <div className="h-px w-20 bg-gold/40 mb-8" />
             <p className="text-cream/50 text-lg leading-relaxed mb-6 font-light">
-              For over a century, AURUM&apos;s master artisans have dedicated their
+              For over a century, VARAHI JEWELS's master artisans have dedicated their
               lives to the pursuit of perfection. Each piece begins as a vision
               and is brought to life through hundreds of hours of meticulous
               handwork.

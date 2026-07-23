@@ -19,8 +19,8 @@ export default function AboutPage() {
         <span className="text-xs tracking-[0.4em] uppercase text-gold/60 block mb-4">
           Our Story
         </span>
-        <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4">
-          About AURUM
+        <h1 className="font-serif text-5xl md:text-6xl font-bold text-white mb-4">
+          About VARAHI JEWELS
         </h1>
         <p className="text-cream/50 text-lg max-w-xl mx-auto font-light">
           A legacy of extraordinary craftsmanship since 1892.
@@ -39,7 +39,7 @@ export default function AboutPage() {
           >
             <Image
               src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=800&h=800&fit=crop"
-              alt="AURUM Heritage"
+              alt="VARAHI JEWELS Heritage"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -60,7 +60,7 @@ export default function AboutPage() {
             <div className="h-px w-16 bg-gold/30 mb-6" />
             <p className="text-cream/50 text-lg leading-relaxed mb-6 font-light">
               Founded in 1892 by master goldsmith Edouard Aurum in the heart of
-              Geneva, AURUM has been synonymous with uncompromising luxury for
+              Geneva, VARAHI JEWELS has been synonymous with uncompromising luxury for
               over a century. What began as a small atelier has blossomed into
               one of the world&apos;s most revered jewellery houses.
             </p>

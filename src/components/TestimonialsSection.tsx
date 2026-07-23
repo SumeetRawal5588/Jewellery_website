@@ -7,19 +7,19 @@ const testimonials = [
   {
     name: "Victoria Rothschild",
     role: "Art Collector, Paris",
-    text: "AURUM's craftsmanship is unparalleled. The Celestial Necklace I commissioned is nothing short of a masterpiece — every facet tells a story.",
+    text: "VARAHI JEWELS's craftsmanship is unparalleled. The Celestial Necklace I commissioned is nothing short of a masterpiece — every facet tells a story.",
     rating: 5,
   },
   {
     name: "James Wellington III",
     role: "CEO, Sterling Enterprises",
-    text: "I've purchased from the finest houses in the world, but AURUM's attention to detail and personal service is truly in a class of its own.",
+    text: "I've purchased from the finest houses in the world, but VARAHI JEWELS's attention to detail and personal service is truly in a class of its own.",
     rating: 5,
   },
   {
     name: "Amara Al-Rashid",
     role: "Fashion Editor, Dubai",
-    text: "Timeless, exquisite, and deeply personal. AURUM doesn't just create jewellery — they create heirlooms that transcend generations.",
+    text: "Timeless, exquisite, and deeply personal. VARAHI JEWELS doesn't just create jewellery — they create heirlooms that transcend generations.",
     rating: 5,
   },
 ];
