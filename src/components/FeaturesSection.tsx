@@ -1,7 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { Gem, Shield, Award, Truck } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const features = [
   {
@@ -27,46 +29,51 @@ const features = [
 ];
 
 export default function FeaturesSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    if (cardsRef.current) {
+      const cards = cardsRef.current.children;
+      gsap.fromTo(cards, { y: 60, opacity: 0, scale: 0.9 }, {
+        y: 0, opacity: 1, scale: 1, duration: 0.8, ease: "power3.out", stagger: 0.15,
+        scrollTrigger: { trigger: sectionRef.current, start: "top 75%", toggleActions: "play none none none" }
+      });
+    }
+  }, []);
+
   return (
-    <section className="py-24 px-6 lg:px-8 bg-black-light">
+    <section ref={sectionRef} className="py-24 px-6 lg:px-8" style={{ background: "var(--bg-secondary)" }}>
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="text-xs tracking-[0.4em] uppercase text-gold/60 block mb-4">
+        <div className="text-center mb-16">
+          <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: "var(--gold-primary)" }}>
             Why Choose Us
           </span>
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-white">The VARAHI JEWELS</span>{" "}
-            <span className="text-white/80">Promise</span>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
+            The VARAHI JEWELS <span className="gold-gradient-text">Promise</span>
           </h2>
           <div className="divider-gold max-w-xs mx-auto" />
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((f, i) => (
-            <motion.div
+        <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {features.map((f) => (
+            <div
               key={f.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="group text-center p-8 border border-gold/10 hover:border-gold/30 transition-all duration-500 bg-black/50"
+              className="group text-center p-8 rounded-xl transition-all duration-500 hover:shadow-lg opacity-0"
+              style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}
             >
-              <div className="w-16 h-16 mx-auto mb-6 border border-gold/20 rounded-full flex items-center justify-center group-hover:border-gold/50 group-hover:bg-gold/5 transition-all duration-500">
-                <f.icon className="w-7 h-7 text-gold/70 group-hover:text-gold transition-colors duration-300" />
+              <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110" style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)" }}>
+                <f.icon className="w-7 h-7 transition-colors duration-300" style={{ color: "var(--gold-primary)" }} />
               </div>
-              <h3 className="font-serif text-lg text-cream mb-3 group-hover:text-gold transition-colors duration-300">
+              <h3 className="font-serif text-lg mb-3 transition-colors duration-300" style={{ color: "var(--text-primary)" }}>
                 {f.title}
               </h3>
-              <p className="text-cream/40 text-sm leading-relaxed">
+              <p className="text-sm leading-relaxed" style={{ color: "var(--text-muted)" }}>
                 {f.desc}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

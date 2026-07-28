@@ -1,12 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import { Send, CheckCircle } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    if (contentRef.current) {
+      gsap.fromTo(contentRef.current, { y: 50, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: contentRef.current, start: "top 85%", toggleActions: "play none none none" }
+      });
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,26 +30,19 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="py-24 px-6 lg:px-8 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-black-light via-black to-black-light" />
-      <div className="absolute inset-0 shimmer-gold opacity-20" />
-
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="relative z-10 max-w-2xl mx-auto text-center"
+    <section className="py-24 px-6 lg:px-8 relative overflow-hidden" style={{ background: "var(--bg-secondary)" }}>
+      <div
+        ref={contentRef}
+        className="relative z-10 max-w-2xl mx-auto text-center opacity-0"
       >
-        <span className="text-xs tracking-[0.4em] uppercase text-gold/60 block mb-4">
+        <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: "var(--gold-primary)" }}>
           Stay Connected
         </span>
-        <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-          <span className="text-cream">Join the</span>{" "}
-          <span className="gold-gradient-text">Inner Circle</span>
+        <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
+          Join the <span className="gold-gradient-text">Inner Circle</span>
         </h2>
         <div className="divider-gold max-w-xs mx-auto mb-6" />
-        <p className="text-cream/50 text-lg font-light mb-10">
+        <p className="text-lg font-light mb-10" style={{ color: "var(--text-secondary)" }}>
           Be the first to discover new collections, receive exclusive
           invitations, and enjoy private previews.
         </p>
@@ -49,11 +54,13 @@ export default function NewsletterSection() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
             required
-            className="flex-1 px-6 py-4 bg-black-lighter/50 border border-gold/20 text-cream placeholder:text-cream/30 text-sm tracking-wider focus:outline-none focus:border-gold/50 transition-colors duration-300"
+            className="flex-1 px-6 py-4 rounded-lg text-sm tracking-wider focus:outline-none transition-colors duration-300"
+            style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
           />
           <button
             type="submit"
-            className="px-8 py-4 bg-gold text-black font-serif text-sm tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 flex items-center justify-center gap-2"
+            className="px-8 py-4 font-serif text-sm tracking-[0.2em] uppercase transition-colors duration-300 flex items-center justify-center gap-2 rounded-lg"
+            style={{ background: "var(--gold-primary)", color: "#fff" }}
           >
             {submitted ? (
               <>
@@ -68,7 +75,7 @@ export default function NewsletterSection() {
             )}
           </button>
         </form>
-      </motion.div>
+      </div>
     </section>
   );
 }

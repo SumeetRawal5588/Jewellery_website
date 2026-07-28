@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Send, Diamond } from "lucide-react";
 import emailjs from '@emailjs/browser';
 
 const info = [
@@ -63,17 +63,26 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="pt-20">
-      <div className="py-16 text-center bg-black-light border-b border-gold/10">
-        <span className="text-xs tracking-[0.4em] uppercase text-gold/60 block mb-4">
-          Get in Touch
-        </span>
-        <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4">
-          Contact
-        </h1>
-        <p className="text-cream/50 text-lg max-w-xl mx-auto font-light">
-          We&apos;d love to hear from you. Our concierge team is at your service.
-        </p>
+    <div className="pt-20" style={{ background: "var(--bg-primary)" }}>
+      {/* Hero Header */}
+      <div className="py-20 text-center relative overflow-hidden" style={{ background: "var(--bg-secondary)" }}>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <Diamond className="w-8 h-8 mx-auto mb-4" style={{ color: "var(--gold-primary)" }} />
+          <span className="text-xs tracking-[0.5em] uppercase block mb-4" style={{ color: "var(--gold-secondary)" }}>
+            Get in Touch
+          </span>
+          <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 gold-gradient-text">
+            Contact Us
+          </h1>
+          <p className="text-lg max-w-xl mx-auto font-light" style={{ color: "var(--text-secondary)" }}>
+            We&apos;d love to hear from you. Our concierge team is at your service.
+          </p>
+        </motion.div>
+        <div className="mt-8 mx-auto w-24 divider-gold" />
       </div>
 
       <section className="py-24 px-6 lg:px-8">
@@ -85,20 +94,20 @@ export default function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="font-serif text-3xl text-cream mb-8">
+            <h2 className="font-serif text-3xl mb-8" style={{ color: "var(--text-primary)" }}>
               Our <span className="gold-gradient-text">Maison</span>
             </h2>
             <div className="space-y-8">
               {info.map((item) => (
                 <div key={item.label} className="flex items-start gap-4">
-                  <div className="w-12 h-12 border border-gold/20 flex items-center justify-center shrink-0">
-                    <item.icon className="w-5 h-5 text-gold/70" />
+                  <div className="w-14 h-14 rounded-full flex items-center justify-center shrink-0 shadow-md" style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
+                    <item.icon className="w-5 h-5" style={{ color: "var(--gold-primary)" }} />
                   </div>
                   <div>
-                    <p className="text-cream font-serif text-sm mb-1">
+                    <p className="font-serif text-base mb-1 font-semibold" style={{ color: "var(--text-primary)" }}>
                       {item.label}
                     </p>
-                    <p className="text-cream/50 text-sm">{item.value}</p>
+                    <p className="text-sm" style={{ color: "var(--text-secondary)" }}>{item.value}</p>
                   </div>
                 </div>
               ))}
@@ -112,50 +121,86 @@ export default function ContactPage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div className="p-8 rounded-2xl shadow-xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
+              <h3 className="font-serif text-2xl mb-6" style={{ color: "var(--text-primary)" }}>Send Us a Message</h3>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    required
+                    value={formData.firstName}
+                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    className="w-full px-5 py-4 rounded-lg text-sm tracking-wider focus:outline-none transition-all duration-300"
+                    style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
+                  />
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    required
+                    value={formData.lastName}
+                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    className="w-full px-5 py-4 rounded-lg text-sm tracking-wider focus:outline-none transition-all duration-300"
+                    style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
+                  />
+                </div>
                 <input
-                  type="text"
-                  placeholder="First Name"
+                  type="email"
+                  placeholder="Email Address"
                   required
-                  value={formData.firstName}
-                  onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                  className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full px-5 py-4 rounded-lg text-sm tracking-wider focus:outline-none transition-all duration-300"
+                  style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
                 />
-                <input
-                  type="text"
-                  placeholder="Last Name"
+                <textarea
+                  rows={5}
+                  placeholder="Your Message"
                   required
-                  value={formData.lastName}
-                  onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                  className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors"
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full px-5 py-4 rounded-lg text-sm tracking-wider focus:outline-none transition-all duration-300 resize-none"
+                  style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
                 />
-              </div>
-              <input
-                type="email"
-                placeholder="Email Address"
-                required
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors"
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-4 font-serif text-sm tracking-[0.2em] uppercase transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg shadow-lg hover:shadow-xl hover:scale-[1.01]"
+                  style={{ background: "var(--gold-primary)", color: "#ffffff" }}
+                >
+                  <Send className="w-4 h-4" />
+                  {loading ? "Sending..." : submitted ? "Message Sent" : "Send Message"}
+                </button>
+              </form>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="pb-24 px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h2 className="font-serif text-3xl mb-8 text-center" style={{ color: "var(--text-primary)" }}>
+              Find <span className="gold-gradient-text">Us</span>
+            </h2>
+            <div className="rounded-2xl overflow-hidden shadow-xl" style={{ border: "1px solid var(--border-color)" }}>
+              <iframe
+                src="https://maps.google.com/maps?q=77%2F79%2C+Sutariya+Building%2C+3rd+Floor%2C+Dhanji+St%2C+Zaveri+Bazaar%2C+Mumbai%2C+Maharashtra+400003&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="450"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="w-full"
               />
-              <textarea
-                rows={5}
-                placeholder="Your Message"
-                required
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-5 py-4 bg-black-lighter/50 border border-gold/15 text-cream placeholder:text-cream/25 text-sm tracking-wider focus:outline-none focus:border-gold/40 transition-colors resize-none"
-              />
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-4 bg-gold text-black font-serif text-sm tracking-[0.2em] uppercase hover:bg-gold-light transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                <Send className="w-4 h-4" />
-                {loading ? "Sending..." : submitted ? "Message Sent" : "Send Message"}
-              </button>
-            </form>
+            </div>
           </motion.div>
         </div>
       </section>

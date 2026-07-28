@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import InstagramButton from "@/components/InstagramButton";
+import { ThemeProvider } from "@/context/ThemeContext";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -34,12 +35,14 @@ export default function RootLayout({
       lang="en"
       className={`${playfair.variable} ${cormorant.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-black text-cream">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <WhatsAppButton />
-        <InstagramButton />
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+          <InstagramButton />
+        </ThemeProvider>
       </body>
     </html>
   );

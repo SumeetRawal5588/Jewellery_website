@@ -62,8 +62,8 @@ export default function AdminDashboard() {
   return (
     <div>
       <div className="mb-10">
-        <h1 className="font-serif text-3xl font-bold text-cream">Dashboard</h1>
-        <p className="text-cream/40 text-sm tracking-wider mt-1">
+        <h1 className="font-serif text-3xl font-bold" style={{ color: "var(--text-primary)" }}>Dashboard</h1>
+        <p className="text-sm tracking-wider mt-1" style={{ color: "var(--text-muted)" }}>
           Welcome back. Here&apos;s your store overview.
         </p>
       </div>
@@ -73,13 +73,14 @@ export default function AdminDashboard() {
         {stats.map((s) => (
           <div
             key={s.label}
-            className="p-6 bg-black-light border border-gold/10 hover:border-gold/25 transition-colors"
+            className="p-6 rounded-xl transition-colors hover:shadow-md"
+            style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}
           >
             <div className="flex items-center justify-between mb-4">
-              <s.icon className={`w-6 h-6 ${s.color}`} />
+              <s.icon className="w-6 h-6" style={{ color: "var(--gold-primary)" }} />
             </div>
-            <p className="font-serif text-2xl text-cream">{s.value}</p>
-            <p className="text-cream/40 text-xs tracking-wider mt-1">
+            <p className="font-serif text-2xl" style={{ color: "var(--text-primary)" }}>{s.value}</p>
+            <p className="text-xs tracking-wider mt-1" style={{ color: "var(--text-muted)" }}>
               {s.label}
             </p>
           </div>
@@ -87,25 +88,25 @@ export default function AdminDashboard() {
       </div>
 
       {/* Recent products */}
-      <div className="bg-black-light border border-gold/10 p-6">
-        <h2 className="font-serif text-xl text-cream mb-6">Recent Products</h2>
+      <div className="p-6 rounded-xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
+        <h2 className="font-serif text-xl mb-6" style={{ color: "var(--text-primary)" }}>Recent Products</h2>
         {products.length === 0 ? (
-          <p className="text-cream/30 text-sm">No products yet. Add your first product!</p>
+          <p className="text-sm" style={{ color: "var(--text-muted)" }}>No products yet. Add your first product!</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gold/10">
-                  <th className="text-left py-3 px-4 text-gold/60 tracking-wider text-xs uppercase">
+                <tr style={{ borderBottom: "1px solid var(--border-color)" }}>
+                  <th className="text-left py-3 px-4 tracking-wider text-xs uppercase" style={{ color: "var(--gold-primary)" }}>
                     Name
                   </th>
-                  <th className="text-left py-3 px-4 text-gold/60 tracking-wider text-xs uppercase">
+                  <th className="text-left py-3 px-4 tracking-wider text-xs uppercase" style={{ color: "var(--gold-primary)" }}>
                     Category
                   </th>
-                  <th className="text-left py-3 px-4 text-gold/60 tracking-wider text-xs uppercase">
+                  <th className="text-left py-3 px-4 tracking-wider text-xs uppercase" style={{ color: "var(--gold-primary)" }}>
                     Price
                   </th>
-                  <th className="text-left py-3 px-4 text-gold/60 tracking-wider text-xs uppercase">
+                  <th className="text-left py-3 px-4 tracking-wider text-xs uppercase" style={{ color: "var(--gold-primary)" }}>
                     Badge
                   </th>
                 </tr>
@@ -114,20 +115,21 @@ export default function AdminDashboard() {
                 {products.slice(0, 8).map((p) => (
                   <tr
                     key={p.id}
-                    className="border-b border-gold/5 hover:bg-gold/5 transition-colors"
+                    className="transition-colors"
+                    style={{ borderBottom: "1px solid var(--border-light)" }}
                   >
-                    <td className="py-3 px-4 text-cream">{p.name}</td>
-                    <td className="py-3 px-4 text-cream/50">{p.category}</td>
-                    <td className="py-3 px-4 text-gold">
+                    <td className="py-3 px-4" style={{ color: "var(--text-primary)" }}>{p.name}</td>
+                    <td className="py-3 px-4" style={{ color: "var(--text-secondary)" }}>{p.category}</td>
+                    <td className="py-3 px-4" style={{ color: "var(--gold-primary)" }}>
                       ${p.price.toLocaleString()}
                     </td>
                     <td className="py-3 px-4">
                       {p.badge ? (
-                        <span className="px-2 py-1 bg-gold/10 text-gold text-xs tracking-wider">
+                        <span className="px-2 py-1 text-xs tracking-wider rounded" style={{ background: "var(--bg-accent)", color: "var(--gold-primary)" }}>
                           {p.badge}
                         </span>
                       ) : (
-                        <span className="text-cream/20">—</span>
+                        <span style={{ color: "var(--text-muted)" }}>—</span>
                       )}
                     </td>
                   </tr>

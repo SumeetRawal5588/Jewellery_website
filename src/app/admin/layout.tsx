@@ -55,14 +55,14 @@ export default function AdminLayout({
 
   if (!authed) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white px-6 pt-24">
+      <div className="min-h-screen flex items-center justify-center px-6 pt-24" style={{ background: "var(--bg-primary)" }}>
         <div className="w-full max-w-sm">
           <div className="text-center mb-10">
-            <Diamond className="w-10 h-10 text-emerald mx-auto mb-4" />
-            <h1 className="font-serif text-3xl font-bold text-emerald tracking-wider">
+            <Diamond className="w-10 h-10 mx-auto mb-4" style={{ color: "var(--gold-primary)" }} />
+            <h1 className="font-serif text-3xl font-bold tracking-wider" style={{ color: "var(--gold-primary)" }}>
               Varahi Jewels
             </h1>
-            <p className="text-gray-600 text-sm mt-2 tracking-wider">
+            <p className="text-sm mt-2 tracking-wider" style={{ color: "var(--text-secondary)" }}>
               Admin Dashboard
             </p>
           </div>
@@ -73,7 +73,8 @@ export default function AdminLayout({
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter admin password"
-                className="w-full px-5 py-4 bg-gray-50 border border-emerald/20 text-gray-800 placeholder:text-gray-400 text-sm tracking-wider focus:outline-none focus:border-emerald/50 transition-colors"
+                className="w-full px-5 py-4 rounded-lg text-sm tracking-wider focus:outline-none transition-colors"
+                style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
               />
             </div>
             {error && (
@@ -81,12 +82,13 @@ export default function AdminLayout({
             )}
             <button
               type="submit"
-              className="w-full py-4 bg-emerald text-white font-serif text-sm tracking-[0.2em] uppercase hover:bg-emerald-light transition-colors"
+              className="w-full py-4 font-serif text-sm tracking-[0.2em] uppercase transition-colors rounded-lg"
+              style={{ background: "var(--gold-primary)", color: "#fff" }}
             >
               Sign In
             </button>
           </form>
-          <p className="text-center text-gray-400 text-xs mt-8">
+          <p className="text-center text-xs mt-8" style={{ color: "var(--text-muted)" }}>
             Default password: aurum2024
           </p>
         </div>
@@ -95,29 +97,31 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-white flex pt-20">
+    <div className="min-h-screen flex pt-20" style={{ background: "var(--bg-primary)" }}>
       {/* Mobile toggle */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden fixed top-24 left-4 z-50 w-10 h-10 bg-gray-50 border border-emerald/20 flex items-center justify-center text-emerald"
+        className="lg:hidden fixed top-24 left-4 z-50 w-10 h-10 rounded-lg flex items-center justify-center"
+        style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)", color: "var(--gold-primary)" }}
       >
         {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
       </button>
 
       {/* Sidebar */}
       <aside
-        className={`fixed lg:sticky top-20 left-0 h-[calc(100vh-5rem)] w-64 bg-gray-50 border-r border-emerald/10 flex flex-col z-40 transition-transform duration-300 ${
+        className={`fixed lg:sticky top-20 left-0 h-[calc(100vh-5rem)] w-64 border-r flex flex-col z-40 transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
+        style={{ background: "var(--bg-secondary)", borderColor: "var(--border-color)" }}
       >
-        <div className="p-6 border-b border-emerald/10">
+        <div className="p-6 border-b" style={{ borderColor: "var(--border-color)" }}>
           <div className="flex items-center gap-2">
-            <Diamond className="w-5 h-5 text-emerald" />
-            <span className="font-serif text-lg font-bold tracking-[0.15em] text-emerald">
+            <Diamond className="w-5 h-5" style={{ color: "var(--gold-primary)" }} />
+            <span className="font-serif text-lg font-bold tracking-[0.15em]" style={{ color: "var(--gold-primary)" }}>
               Varahi Jewels
             </span>
           </div>
-          <p className="text-gray-600 text-xs tracking-wider mt-1">
+          <p className="text-xs tracking-wider mt-1" style={{ color: "var(--text-secondary)" }}>
             Admin Panel
           </p>
         </div>
@@ -132,11 +136,12 @@ export default function AdminLayout({
                 key={link.href}
                 href={link.href}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-4 py-3 text-sm tracking-wider transition-all duration-300 ${
-                  isActive
-                    ? "bg-emerald/10 text-emerald border-l-2 border-emerald"
-                    : "text-gray-600 hover:text-gray-800 hover:bg-emerald/5"
-                }`}
+                className="flex items-center gap-3 px-4 py-3 text-sm tracking-wider transition-all duration-300 rounded-lg"
+                style={{
+                  background: isActive ? "var(--bg-card)" : "transparent",
+                  color: isActive ? "var(--gold-primary)" : "var(--text-secondary)",
+                  border: isActive ? "1px solid var(--border-color)" : "1px solid transparent",
+                }}
               >
                 <link.icon className="w-4 h-4" />
                 {link.label}
@@ -145,10 +150,11 @@ export default function AdminLayout({
           })}
         </nav>
 
-        <div className="p-4 border-t border-emerald/10">
+        <div className="p-4 border-t" style={{ borderColor: "var(--border-color)" }}>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-3 px-4 py-3 text-sm tracking-wider text-gray-600 hover:text-red-500 transition-colors w-full"
+            className="flex items-center gap-3 px-4 py-3 text-sm tracking-wider hover:text-red-500 transition-colors w-full rounded-lg"
+            style={{ color: "var(--text-secondary)" }}
           >
             <LogOut className="w-4 h-4" />
             Sign Out
