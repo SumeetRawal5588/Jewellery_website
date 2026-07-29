@@ -191,7 +191,7 @@ export default function ContactPage() {
             </h2>
             <div className="rounded-2xl overflow-hidden shadow-xl" style={{ border: "1px solid var(--border-color)" }}>
               <iframe
-                src="https://maps.google.com/maps?q=77%2F79%2C+Sutariya+Building%2C+3rd+Floor%2C+Dhanji+St%2C+Zaveri+Bazaar%2C+Mumbai%2C+Maharashtra+400003&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=Varahi+Jewels%2C+77%2F79%2C+Sutariya+Building%2C+3rd+Floor%2C+Dhanji+St%2C+Zaveri+Bazaar%2C+Mumbai%2C+Maharashtra+400003&t=&z=18&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="450"
                 style={{ border: 0 }}

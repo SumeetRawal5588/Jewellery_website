@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Eye, ShoppingBag } from "lucide-react";
 import type { Product } from "@/lib/types";
 import { PRODUCT_CATEGORIES } from "@/lib/types";
 import gsap from "gsap";
@@ -97,55 +96,32 @@ export default function ProductGrid() {
                 transition={{ duration: 0.5, delay: i * 0.08 }}
               >
                 <Link href={`/product/${product.id}`} className="group block">
-                  <div className="overflow-hidden rounded-lg transition-all duration-500 hover:shadow-xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
+                  <div className="overflow-hidden rounded-xl transition-all duration-500 hover:shadow-xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
                     {/* Image */}
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <Image
                         src={product.image}
                         alt={product.name}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
                       {/* Badge */}
                       {product.badge && (
-                        <div className="absolute top-4 left-4 px-3 py-1 text-[10px] tracking-[0.2em] uppercase font-bold rounded-full" style={{ background: "var(--gold-primary)", color: "#fff" }}>
+                        <div className="absolute top-3 left-3 px-3 py-1 text-[9px] tracking-[0.2em] uppercase font-bold rounded-full" style={{ background: "var(--gold-primary)", color: "#fff" }}>
                           {product.badge}
                         </div>
                       )}
-
-                      {/* Hover actions */}
-                      <div className="absolute bottom-4 left-4 right-4 flex justify-center gap-3 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                        <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-black hover:bg-white transition-all duration-300">
-                          <Eye className="w-4 h-4" />
-                        </button>
-                        <button className="w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-black hover:bg-white transition-all duration-300">
-                          <ShoppingBag className="w-4 h-4" />
-                        </button>
-                      </div>
                     </div>
 
-                    {/* Details */}
-                    <div className="p-5">
-                      <p className="text-[10px] tracking-[0.25em] uppercase mb-2" style={{ color: "var(--gold-primary)" }}>
-                        {product.category}
-                      </p>
-                      <h3 className="font-serif text-lg transition-colors duration-300 mb-2" style={{ color: "var(--text-primary)" }}>
+                    {/* Minimal Details */}
+                    <div className="p-4 text-center">
+                      <h3 className="font-serif text-base transition-colors duration-300 mb-1" style={{ color: "var(--text-primary)" }}>
                         {product.name}
                       </h3>
-                      <p className="text-xs leading-relaxed mb-3 line-clamp-2" style={{ color: "var(--text-muted)" }}>
-                        {product.description}
-                      </p>
-                      <p className="font-serif text-xl" style={{ color: "var(--gold-secondary)" }}>
+                      <p className="font-serif text-lg" style={{ color: "var(--gold-primary)" }}>
                         ₹{product.price.toLocaleString()}
                       </p>
-                      {product.weight && (
-                        <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-                          Weight: {product.weight}g
-                        </p>
-                      )}
                     </div>
                   </div>
                 </Link>

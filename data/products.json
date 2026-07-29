@@ -68,15 +68,6 @@
     "createdAt": "2026-04-20T10:46:39.764Z"
   },
   {
-    "id": "d61b3d8a-dc45-4046-964b-fa8f5634f08e",
-    "name": "Golden Ring",
-    "category": "Rings",
-    "price": 500,
-    "image": "/uploads/95f4a521-18a5-4ea1-9264-2c5736dd8e96.jpg",
-    "description": "",
-    "createdAt": "2026-04-26T17:08:03.132Z"
-  },
-  {
     "id": "9e927bc0-ff87-46e0-bf77-b14187815172",
     "name": "necklace",
     "category": "Necklaces",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
@@ -21,6 +22,10 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+  // Use light (white) text only on homepage when not scrolled (dark video bg)
+  const useLightText = isHome && !scrolled;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -43,9 +48,9 @@ export default function Navbar() {
         ref={headerRef}
         className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          background: scrolled ? "var(--nav-bg)" : "transparent",
-          backdropFilter: scrolled ? "blur(16px)" : "none",
-          borderBottom: scrolled ? "1px solid var(--border-color)" : "1px solid transparent",
+          background: (scrolled || !isHome) ? "var(--nav-bg)" : "transparent",
+          backdropFilter: (scrolled || !isHome) ? "blur(16px)" : "none",
+          borderBottom: (scrolled || !isHome) ? "1px solid var(--border-color)" : "1px solid transparent",
           boxShadow: scrolled ? "0 2px 20px rgba(0,0,0,0.05)" : "none",
         }}
       >
@@ -58,10 +63,10 @@ export default function Navbar() {
                 <path d="M16 6L18.5 11L24 12.5L20 16.5L21 22L16 19.5L11 22L12 16.5L8 12.5L13.5 11L16 6Z" fill="var(--gold-dark)" opacity="0.6"/>
               </svg>
               <div className="flex flex-col">
-                <span className="font-serif text-xl font-bold tracking-[0.15em] leading-tight" style={{ color: "var(--text-primary)" }}>
+                <span className="font-serif text-xl font-bold tracking-[0.15em] leading-tight" style={{ color: useLightText ? "#ffffff" : "var(--text-primary)" }}>
                   VARAHI
                 </span>
-                <span className="text-[9px] tracking-[0.4em] uppercase" style={{ color: "var(--gold-primary)" }}>
+                <span className="text-[9px] tracking-[0.4em] uppercase" style={{ color: useLightText ? "#d4af6e" : "var(--gold-primary)" }}>
                   Jewels
                 </span>
               </div>
@@ -74,7 +79,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className="relative text-[13px] tracking-[0.15em] uppercase transition-colors duration-300 group font-medium"
-                  style={{ color: "var(--text-secondary)" }}
+                  style={{ color: useLightText ? "#ffffff" : "var(--text-secondary)" }}
                 >
                   {link.label}
                   <span className="absolute -bottom-1 left-0 w-0 h-[2px] rounded-full transition-all duration-300 group-hover:w-full" style={{ background: "var(--gold-primary)" }} />
@@ -87,14 +92,14 @@ export default function Navbar() {
               <button
                 onClick={toggleTheme}
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--gold-primary)" }}
+                style={{ background: useLightText ? "rgba(255,255,255,0.15)" : "var(--bg-accent)", border: useLightText ? "1px solid rgba(255,255,255,0.3)" : "1px solid var(--border-color)", color: useLightText ? "#ffffff" : "var(--gold-primary)" }}
                 aria-label="Toggle theme"
               >
                 {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
               </button>
               <button
                 className="lg:hidden w-9 h-9 rounded-full flex items-center justify-center"
-                style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)", color: "var(--text-primary)" }}
+                style={{ background: useLightText ? "rgba(255,255,255,0.15)" : "var(--bg-accent)", border: useLightText ? "1px solid rgba(255,255,255,0.3)" : "1px solid var(--border-color)", color: useLightText ? "#ffffff" : "var(--text-primary)" }}
                 onClick={() => setMobileOpen(true)}
               >
                 <Menu className="w-4 h-4" />

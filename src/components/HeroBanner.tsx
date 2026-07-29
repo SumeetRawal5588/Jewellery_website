@@ -57,16 +57,19 @@ export default function HeroBanner() {
 
   return (
     <section ref={sectionRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with parallax */}
+      {/* Background video with parallax */}
       <div className="absolute inset-0">
-        <div
-          className="hero-bg absolute inset-0 bg-cover bg-center bg-no-repeat scale-110"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop')",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
+        <video
+          className="hero-bg absolute inset-0 w-full h-full object-cover scale-110"
+          autoPlay
+          muted
+          loop
+          playsInline
+          poster="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop"
+        >
+          <source src="https://videos.pexels.com/video-files/6262813/6262813-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
       </div>
 
       {/* Floating golden ornament particles */}
