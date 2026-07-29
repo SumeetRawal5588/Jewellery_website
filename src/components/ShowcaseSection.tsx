@@ -37,7 +37,7 @@ export default function ShowcaseSection() {
           <div ref={imageRef} className="relative opacity-0">
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-2xl">
               <Image
-                src="https://images.unsplash.com/photo-1515562141589-67f0d569b6c4?w=800&h=1000&fit=crop"
+                src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&h=1000&fit=crop"
                 alt="Master artisan crafting jewellery"
                 fill
                 className="object-cover"
