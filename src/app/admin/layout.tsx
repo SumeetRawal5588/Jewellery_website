@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Package,
   BookOpen,
   LogOut,
-  Diamond,
   Menu,
   X,
 } from "lucide-react";
@@ -58,10 +58,13 @@ export default function AdminLayout({
       <div className="min-h-screen flex items-center justify-center px-6 pt-24" style={{ background: "var(--bg-primary)" }}>
         <div className="w-full max-w-sm">
           <div className="text-center mb-10">
-            <Diamond className="w-10 h-10 mx-auto mb-4" style={{ color: "var(--gold-primary)" }} />
-            <h1 className="font-serif text-3xl font-bold tracking-wider" style={{ color: "var(--gold-primary)" }}>
-              Varahi Jewels
-            </h1>
+            <Image
+              src="/varahi_logo.png"
+              alt="Varahi Jewels"
+              width={1024}
+              height={1024}
+              className="h-12 w-auto mx-auto mb-4"
+            />
             <p className="text-sm mt-2 tracking-wider" style={{ color: "var(--text-secondary)" }}>
               Admin Dashboard
             </p>
@@ -115,12 +118,13 @@ export default function AdminLayout({
         style={{ background: "var(--bg-secondary)", borderColor: "var(--border-color)" }}
       >
         <div className="p-6 border-b" style={{ borderColor: "var(--border-color)" }}>
-          <div className="flex items-center gap-2">
-            <Diamond className="w-5 h-5" style={{ color: "var(--gold-primary)" }} />
-            <span className="font-serif text-lg font-bold tracking-[0.15em]" style={{ color: "var(--gold-primary)" }}>
-              Varahi Jewels
-            </span>
-          </div>
+          <Image
+            src="/varahi_logo.png"
+            alt="Varahi Jewels"
+            width={1024}
+            height={1024}
+            className="h-9 w-auto"
+          />
           <p className="text-xs tracking-wider mt-1" style={{ color: "var(--text-secondary)" }}>
             Admin Panel
           </p>

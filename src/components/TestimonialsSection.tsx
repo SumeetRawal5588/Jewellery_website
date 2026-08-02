@@ -59,8 +59,7 @@ export default function TestimonialsSection() {
           {testimonials.map((t) => (
             <div
               key={t.name}
-              className="relative p-8 rounded-xl transition-all duration-500 group hover:shadow-lg opacity-0"
-              style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}
+              className="luxury-card relative p-8 group opacity-0"
             >
               <Quote className="w-8 h-8 absolute top-6 right-6 transition-colors duration-500" style={{ color: "var(--border-color)" }} />
               <div className="flex gap-1 mb-6">

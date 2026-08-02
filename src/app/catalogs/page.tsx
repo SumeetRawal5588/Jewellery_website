@@ -21,15 +21,15 @@ export default function CatalogsPage() {
   }, []);
 
   return (
-    <div className="pt-20">
-      <div className="py-16 text-center bg-black-light border-b border-gold/10">
-        <span className="text-xs tracking-[0.4em] uppercase text-gold/60 block mb-4">
+    <div className="pt-20" style={{ background: "var(--bg-primary)" }}>
+      <div className="py-16 text-center border-b" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-color)" }}>
+        <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: "var(--gold-primary)" }}>
           Browse
         </span>
         <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4">
           Catalogs
         </h1>
-        <p className="text-cream/50 text-lg max-w-xl mx-auto font-light">
+        <p className="text-lg max-w-xl mx-auto font-light" style={{ color: "var(--text-secondary)" }}>
           Explore our curated lookbooks and seasonal collections.
         </p>
       </div>
@@ -38,15 +38,15 @@ export default function CatalogsPage() {
         <div className="max-w-7xl mx-auto">
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="w-8 h-8 border-2 border-gold/30 border-t-gold rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 rounded-full animate-spin" style={{ borderColor: "var(--border-color)", borderTopColor: "var(--gold-primary)" }} />
             </div>
           ) : catalogs.length === 0 ? (
             <div className="text-center py-20">
-              <BookOpen className="w-12 h-12 text-gold/20 mx-auto mb-4" />
-              <p className="text-cream/30 text-lg font-serif">
+              <BookOpen className="w-12 h-12 mx-auto mb-4" style={{ color: "var(--text-muted)" }} />
+              <p className="text-lg font-serif" style={{ color: "var(--text-secondary)" }}>
                 No catalogs available yet.
               </p>
-              <p className="text-cream/20 text-sm mt-2">
+              <p className="text-sm mt-2" style={{ color: "var(--text-muted)" }}>
                 Check back soon for new collections.
               </p>
             </div>
@@ -55,14 +55,15 @@ export default function CatalogsPage() {
               {catalogs.map((cat, i) => (
                 <motion.div
                   key={cat.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.7, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                 >
                   <Link
                     href={`/catalogs/${cat.id}`}
-                    className="group block luxury-card overflow-hidden"
+                    className="group block overflow-hidden rounded-xl transition-all duration-700 ease-out hover:shadow-2xl hover:-translate-y-2"
+                    style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}
                   >
                     <div className="relative h-64 overflow-hidden">
                       {cat.coverImage ? (
@@ -70,29 +71,29 @@ export default function CatalogsPage() {
                           src={cat.coverImage}
                           alt={cat.title}
                           fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-110"
+                          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.15]"
                           sizes="(max-width: 768px) 100vw, 33vw"
                         />
                       ) : (
-                        <div className="w-full h-full bg-black-lighter flex items-center justify-center">
-                          <BookOpen className="w-16 h-16 text-gold/10" />
+                        <div className="w-full h-full flex items-center justify-center" style={{ background: "var(--bg-accent)" }}>
+                          <BookOpen className="w-16 h-16" style={{ color: "var(--text-muted)" }} />
                         </div>
                       )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                     </div>
                     <div className="p-6">
-                      <h3 className="font-serif text-xl text-cream group-hover:text-gold transition-colors mb-2">
+                      <h3 className="font-serif text-xl transition-colors mb-2" style={{ color: "var(--text-primary)" }}>
                         {cat.title}
                       </h3>
-                      <p className="text-cream/40 text-sm leading-relaxed mb-4 line-clamp-2">
+                      <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: "var(--text-muted)" }}>
                         {cat.description || "Explore this curated collection"}
                       </p>
                       <div className="flex items-center justify-between">
-                        <span className="text-gold/40 text-xs tracking-wider">
+                        <span className="text-xs tracking-wider" style={{ color: "var(--text-muted)" }}>
                           {cat.productIds.length} piece
                           {cat.productIds.length !== 1 ? "s" : ""}
                         </span>
-                        <span className="text-gold text-xs tracking-wider flex items-center gap-1 group-hover:gap-2 transition-all">
+                        <span className="text-xs tracking-wider flex items-center gap-1 group-hover:gap-2 transition-all" style={{ color: "var(--gold-primary)" }}>
                           View Catalog
                           <ArrowRight className="w-3 h-3" />
                         </span>

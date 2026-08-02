@@ -123,14 +123,17 @@ body {
 .luxury-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  overflow: hidden;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--card-shadow);
+  will-change: transform;
 }
 
 .luxury-card:hover {
   border-color: var(--gold-primary);
-  box-shadow: 0 20px 60px rgba(201,169,110,0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 24px 70px rgba(201,169,110,0.18);
+  transform: translateY(-8px) scale(1.01);
 }
 
 .divider-emerald {

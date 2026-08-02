@@ -61,8 +61,7 @@ export default function FeaturesSection() {
           {features.map((f) => (
             <div
               key={f.title}
-              className="group text-center p-8 rounded-xl transition-all duration-500 hover:shadow-lg opacity-0"
-              style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}
+              className="luxury-card group text-center p-8 opacity-0"
             >
               <div className="w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110" style={{ background: "var(--bg-accent)", border: "1px solid var(--border-color)" }}>
                 <f.icon className="w-7 h-7 transition-colors duration-300" style={{ color: "var(--gold-primary)" }} />

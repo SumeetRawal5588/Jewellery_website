@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 import gsap from "gsap";
+import Image from "next/image";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -55,21 +56,17 @@ export default function Navbar() {
         }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-24">
             {/* Logo */}
-            <Link ref={logoRef} href="/" className="flex items-center gap-3 group">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="group-hover:rotate-12 transition-transform duration-500">
-                <path d="M16 2L20 10L28 12L22 18L24 26L16 22L8 26L10 18L4 12L12 10L16 2Z" fill="var(--gold-primary)" opacity="0.9"/>
-                <path d="M16 6L18.5 11L24 12.5L20 16.5L21 22L16 19.5L11 22L12 16.5L8 12.5L13.5 11L16 6Z" fill="var(--gold-dark)" opacity="0.6"/>
-              </svg>
-              <div className="flex flex-col">
-                <span className="font-serif text-xl font-bold tracking-[0.15em] leading-tight" style={{ color: useLightText ? "#ffffff" : "var(--text-primary)" }}>
-                  VARAHI
-                </span>
-                <span className="text-[9px] tracking-[0.4em] uppercase" style={{ color: useLightText ? "#d4af6e" : "var(--gold-primary)" }}>
-                  Jewels
-                </span>
-              </div>
+            <Link ref={logoRef} href="/" className="flex items-center gap-3">
+              <Image
+                src="/varahi_logo.png"
+                alt="Varahi Jewels"
+                width={1024}
+                height={1024}
+                priority
+                className="h-24 w-auto"
+              />
             </Link>
 
             {/* Nav links */}

@@ -90,20 +90,21 @@ export default function ProductGrid() {
               <motion.div
                 key={product.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 60, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: "-50px" }}
                 exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: [0.25, 0.1, 0.25, 1] }}
               >
                 <Link href={`/product/${product.id}`} className="group block">
-                  <div className="overflow-hidden rounded-xl transition-all duration-500 hover:shadow-xl" style={{ background: "var(--bg-card)", border: "1px solid var(--border-color)" }}>
+                  <div className="luxury-card">
                     {/* Image */}
                     <div className="relative aspect-[3/4] overflow-hidden">
                       <Image
                         src={product.image}
                         alt={product.name}
                         fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.15]"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       />
                       {/* Badge */}

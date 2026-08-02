@@ -3,10 +3,11 @@
 export default function InstagramButton() {
   return (
     <a
-      href="https://www.instagram.com/_bajrang___jewellers_?igsh=MWs5dWpocGtkcjQ2ZA=="
+      href="https://www.instagram.com/Varahi__jewels__?igsh=MWs5dWpocGtkcjQ2ZA=="
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-500 hover:from-purple-600 hover:via-pink-600 hover:to-orange-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center"
+      className="fixed bottom-6 right-6 z-50 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 flex items-center justify-center"
+      style={{ background: "linear-gradient(135deg, var(--gold-primary), var(--gold-secondary))" }}
       aria-label="Follow on Instagram"
     >
       <svg

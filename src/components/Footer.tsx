@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Diamond, Globe, Heart, Sparkles } from "lucide-react";
+import Image from "next/image";
+import { Globe, Heart, Sparkles } from "lucide-react";
 
 const footerLinks = {
   Collections: ["Necklaces", "Rings", "Earrings", "Bracelets", "Tiaras"],
@@ -13,11 +14,14 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
-            <Link href="/" className="flex items-center gap-2 mb-6">
-              <Diamond className="w-5 h-5" style={{ color: "var(--gold-primary)" }} />
-              <span className="font-serif text-xl font-bold tracking-[0.2em]" style={{ color: "var(--gold-primary)" }}>
-                Varahi Jewels
-              </span>
+            <Link href="/" className="block mb-6">
+              <Image
+                src="/varahi_logo.png"
+                alt="Varahi Jewels"
+                width={1024}
+                height={1024}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--text-secondary)" }}>
               Crafting timeless pieces of extraordinary beauty since 1892.

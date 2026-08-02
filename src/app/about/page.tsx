@@ -16,10 +16,10 @@ export default function AboutPage() {
     <div className="pt-20" style={{ background: "var(--bg-primary)" }}>
       {/* Header */}
       <div className="py-16 text-center border-b" style={{ background: "var(--bg-secondary)", borderColor: "var(--border-color)" }}>
-        <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: "var(--gold-primary)" }}>
+        <span className="text-xs tracking-[0.5em] uppercase block mb-4" style={{ color: "var(--gold-secondary)" }}>
           Our Story
         </span>
-        <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4" style={{ color: "var(--text-primary)" }}>
+        <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 gold-gradient-text">
           About VARAHI JEWELS
         </h1>
         <p className="text-lg max-w-xl mx-auto font-light" style={{ color: "var(--text-secondary)" }}>
