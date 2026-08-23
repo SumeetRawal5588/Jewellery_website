@@ -11,7 +11,7 @@ Comprehensive technical documentation covering every aspect of the website, admi
 **Domain:** Luxury jewellery e-commerce/catalog showcase  
 **Frontend Type:** Server-rendered React application with client-side interactivity  
 **Admin Panel:** In-browser content management system for products and catalogs  
-**Data Storage:** File-based JSON database (`data/products.json`, `data/catalogs.json`)  
+**Data Storage:** PostgreSQL database (`products` and `catalogs` tables), with optional JSON seed/migration files (`data/products.json`, `data/catalogs.json`)  
 **Image Uploads:** Local filesystem (`public/uploads/`)  
 **Default Admin Password:** `PASSWORD` (hardcoded in `src/app/admin/layout.tsx`; UI label shows "aurum2024")
 
@@ -36,6 +36,7 @@ Comprehensive technical documentation covering every aspect of the website, admi
 | Type Definitions | @types/uuid | ^10.0.0 | TypeScript types for uuid |
 | Linting | ESLint | ^9 | Code linting |
 | Next ESLint | eslint-config-next | 16.2.4 | Next.js recommended ESLint rules |
+|| Database | pg (PostgreSQL client) | ^8.23.0 | PostgreSQL connection pooling and queries |
 
 ### Fonts
 
@@ -45,12 +46,14 @@ Comprehensive technical documentation covering every aspect of the website, admi
 ### Environment Variables (`.env.local`)
 
 ```
+DATABASE_URL=postgresql://postgres:postgres@localhost:5432/varahi
 NEXT_PUBLIC_EMAILJS_SERVICE_ID=service_9ddi8er
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=template_oe2fmpi
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=YzScrRmyfuGu1QAEU
 ```
 
-These are used by the **Contact page** for sending emails via EmailJS.
+- `DATABASE_URL` is used by `src/lib/postgres.ts` to connect to the PostgreSQL database.
+- `NEXT_PUBLIC_EMAILJS_*` are used by the **Contact page** for sending emails via EmailJS.
 
 ---
 
@@ -110,14 +113,12 @@ luxury-jewels/
 │   │   ├── FloatingJewelry.tsx
 │   │   ├── Footer.tsx
 │   │   ├── HeroBanner.tsx
-│   │   ├── InstagramButton.tsx
 │   │   ├── Navbar.tsx
 │   │   ├── NewsletterSection.tsx
 │   │   ├── ProductGrid.tsx
 │   │   ├── ScrollDivider.tsx
 │   │   ├── ShowcaseSection.tsx
-│   │   ├── TestimonialsSection.tsx
-│   │   └── WhatsAppButton.tsx
+│   │   └── TestimonialsSection.tsx
 │   ├── components/admin/         # Admin-specific forms
 │   │   ├── ProductForm.tsx
 │   │   └── CatalogForm.tsx
@@ -141,16 +142,41 @@ The project uses **Next.js 16 App Router** with the file-based routing conventio
 
 ### 4.2 Data Layer (`src/lib/db.ts`)
 
-A custom **file-based JSON database** is used instead of a real database like MongoDB, PostgreSQL, or SQLite.
+A **PostgreSQL** database is used for data persistence. The data layer is implemented in `src/lib/db.ts` and backed by `src/lib/postgres.ts`, which manages a `pg` connection pool and auto-initializes the required tables.
 
-- `readCollection<T>(collection)` - reads `data/{collection}.json`
-- `writeCollection<T>(collection, data)` - writes JSON back to the file
-- `findById<T>(collection, id)` - finds an item by ID
-- `insertItem<T>(collection, item)` - appends an item and saves
-- `updateItem<T>(collection, id, updates)` - updates an item by ID
-- `deleteItem(collection, id)` - removes an item by ID
+- `readCollection<T>(collection)` - queries the `products` or `catalogs` table
+- `writeCollection<T>(collection, data)` - replaces all rows in a table inside a transaction
+- `findById<T>(collection, id)` - finds a row by primary key
+- `insertItem<T>(collection, item)` - inserts a new row
+- `updateItem<T>(collection, id, updates)` - updates an existing row
+- `deleteItem(collection, id)` - removes a row by ID
 
-### 4.3 Data Models (`src/lib/types.ts`)
+### 4.3 PostgreSQL Setup (`src/lib/postgres.ts`)
+
+The PostgreSQL connection is configured via the `DATABASE_URL` environment variable, with a local default of `postgresql://postgres:postgres@localhost:5432/varahi`.
+
+On first use, `initializeDb()` creates the following tables if they do not exist:
+
+- `products`
+  - `id` (TEXT PRIMARY KEY)
+  - `name` (TEXT NOT NULL)
+  - `category` (TEXT NOT NULL)
+  - `price` (NUMERIC NOT NULL)
+  - `weight` (NUMERIC NOT NULL DEFAULT 0)
+  - `image` (TEXT NOT NULL)
+  - `description` (TEXT NOT NULL)
+  - `badge` (TEXT)
+  - `createdAt` (TEXT NOT NULL)
+- `catalogs`
+  - `id` (TEXT PRIMARY KEY)
+  - `title` (TEXT NOT NULL)
+  - `description` (TEXT NOT NULL)
+  - `coverImage` (TEXT NOT NULL)
+  - `pdfUrl` (TEXT)
+  - `productIds` (JSONB NOT NULL DEFAULT `'[]'::jsonb`)
+  - `createdAt` (TEXT NOT NULL)
+
+### 4.4 Data Models (`src/lib/types.ts`)
 
 #### Product
 
@@ -198,7 +224,7 @@ When the `products` collection is empty, 8 default luxury products are seeded wi
 
 - Loads Google Fonts: Playfair Display, Cormorant Garamond
 - Wraps children in `ThemeProvider`
-- Renders persistent `Navbar`, `Footer`, `WhatsAppButton`, `InstagramButton`
+- Renders persistent `Navbar` and `Footer`
 - Uses `<main className="flex-1">` for page content
 
 ### 5.2 Homepage (`src/app/page.tsx`)
@@ -305,12 +331,7 @@ Sections rendered in order:
 - Footer link groups: Collections, Company, Support
 - Copyright and legal links
 
-### 5.14 Floating Social Buttons
-
-- `WhatsAppButton` - Fixed bottom-left WhatsApp chat link
-- `InstagramButton` - Fixed bottom-right Instagram profile link
-
-### 5.15 Floating Jewelry Background (`src/components/FloatingJewelry.tsx`)
+### 5.14 Floating Jewelry Background (`src/components/FloatingJewelry.tsx`)
 
 - SVG ornaments (chains, rings, diamonds, pendants, bangles)
 - Floating and parallax scroll animations using GSAP
@@ -506,24 +527,46 @@ Fields:
 
 ## 10. Data Storage Details
 
-### 10.1 `data/products.json`
+### 10.1 PostgreSQL Database
 
-Live product database. Currently contains a mix of the 8 seeded products and one admin-added product.
+The application uses a **PostgreSQL** database for products and catalogs. Tables are auto-created on startup by `initializeDb()` in `src/lib/postgres.ts` and are accessed through `pg` connection pool helpers in `src/lib/db.ts`.
 
-### 10.2 `data/catalogs.json`
+Default local connection:
+```
+postgresql://postgres:postgres@localhost:5432/varahi
+```
 
-Live catalog database. Currently empty (`[]`) but created by the app.
+Can also be set via the `DATABASE_URL` environment variable.
+
+### 10.2 `data/products.json` and `data/catalogs.json`
+
+Legacy seed/migration files. On first run, `src/lib/seed.ts` checks the PostgreSQL tables and, if they are empty, imports any existing data from these JSON files or falls back to a set of default products. After seeding, the JSON files are no longer the source of truth.
 
 ### 10.3 `public/uploads/`
 
 Uploaded files directory. Contains product images and catalog PDFs.
 
-### 10.4 Limitations
+### 10.4 Docker Compose Database
 
-- No relational database
-- No data backup/rollback
-- File-based storage is not suitable for high-traffic production
-- Concurrent writes may corrupt JSON
+A `docker-compose.yml` is included to run the app with a Postgres 16 container:
+
+- Service: `db` (`postgres:16-alpine`)
+- Database: `varahi`
+- User: `postgres`
+- Password: `postgres`
+- Port: `5432`
+- Volume: `postgres_data` (persisted across restarts)
+
+The `app` service builds the Next.js Dockerfile and connects using:
+```
+postgres://postgres:postgres@db:5432/varahi
+```
+
+### 10.5 Limitations
+
+- No built-in database migrations; schema is created by `initializeDb()`
+- No automated backups
+- Uploads are still stored on the local filesystem
 
 ---
 
@@ -579,11 +622,6 @@ const nextConfig: NextConfig = {
 - **jsdelivr CDN** - Hero background video hosted externally
 - **Google Maps** - Embedded map on Contact page
 
-### 12.3 Social Links
-
-- WhatsApp: `https://wa.me/message/EB7FEYXQESUAP1`
-- Instagram: `https://www.instagram.com/Varahi__jewels__`
-
 ---
 
 ## 13. Feature-Technology Mapping
@@ -596,7 +634,7 @@ const nextConfig: NextConfig = {
 | Styling | Tailwind CSS v4 + Custom CSS |
 | Fonts | `next/font/google` (Playfair Display, Cormorant Garamond) |
 | Theme Toggle | React Context + `localStorage` + CSS variables |
-| Product/Catalog Data | Custom file-based JSON DB (`src/lib/db.ts`) |
+| Product/Catalog Data | PostgreSQL via `pg` (`src/lib/db.ts`, `src/lib/postgres.ts`) |
 | Product Images | Next.js Image + local `/uploads` + Unsplash |
 | File Uploads | Next.js API route + Node.js `fs` + `uuid` |
 | Product Filtering | Client-side React state + API query params |
@@ -613,14 +651,14 @@ const nextConfig: NextConfig = {
 
 ## 14. Known Technical Notes
 
-1. **No real database** - All product and catalog data is stored in JSON files.
+1. **No real database** - PostgreSQL is used; JSON files are only for initial seeding.
 2. **Client-side admin auth** - Password is hardcoded in `layout.tsx`. Not secure for production.
 3. **No checkout/payment** - "Add to Bag" is UI-only.
 4. **File upload limits** - No explicit size/file type validation beyond `accept` attributes.
 5. **Mixed currency display** - Admin products table shows `₹`, catalog detail page shows `$`, product grid shows `₹`.
 6. **Default password mismatch** - Code uses `"PASSWORD"`, UI says `aurum2024`.
 7. **No image optimization for local uploads** - Next.js Image requires domains to be configured for external URLs.
-8. **Concurrent write risk** - File-based DB can corrupt with simultaneous updates.
+8. **Concurrent write risk** - PostgreSQL handles concurrency; still no row-level locking in app code.
 9. **GSAP ScrollTrigger re-registration** - Called in multiple client components.
 10. **No error boundaries** - API failures may not be gracefully handled everywhere.
 
@@ -631,7 +669,7 @@ const nextConfig: NextConfig = {
 The README suggests deployment on **Vercel**, the creators of Next.js.
 
 For production, consider:
-- Replacing file-based DB with a real database (e.g., PostgreSQL, MongoDB, Supabase)
+- Hosting PostgreSQL on a managed service (e.g., Supabase, AWS RDS, Railway) and setting `DATABASE_URL` accordingly
 - Implementing secure server-side admin authentication
 - Adding environment-based config for EmailJS and upload limits
 - Using a CDN for uploads and media
