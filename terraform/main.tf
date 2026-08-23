@@ -66,6 +66,22 @@ resource "aws_security_group" "app" {
   }
 
   ingress {
+    description = "Grafana"
+    from_port   = 30090
+    to_port     = 30090
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Prometheus"
+    from_port   = 30091
+    to_port     = 30091
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
     description = "Jenkins UI"
     from_port   = 8080
     to_port     = 8080

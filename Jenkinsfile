@@ -1,26 +1,27 @@
 pipeline {
     agent any
-
     environment {
         AWS_REGION     = 'ap-south-1'
         ECR_REPO       = '294060270764.dkr.ecr.ap-south-1.amazonaws.com/varahi-jewels-app'
         IMAGE_TAG      = "${env.BUILD_NUMBER}"
         AWS_CREDS      = credentials('aws-credentials')
     }
-
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 sh "docker build -t ${ECR_REPO}:${IMAGE_TAG} -t ${ECR_REPO}:latest ."
             }
         }
-
+        stage('Security Scan') {
+            steps {
+                sh "trivy image --severity HIGH,CRITICAL --exit-code 0 ${ECR_REPO}:${IMAGE_TAG}"
+            }
+        }
         stage('Login to ECR') {
             steps {
                 sh """
@@ -30,14 +31,12 @@ pipeline {
                 """
             }
         }
-
         stage('Push Image to ECR') {
             steps {
                 sh "docker push ${ECR_REPO}:${IMAGE_TAG}"
                 sh "docker push ${ECR_REPO}:latest"
             }
         }
-
         stage('Deploy to Kubernetes') {
             steps {
                 sh """
@@ -48,7 +47,6 @@ pipeline {
             }
         }
     }
-
     post {
         success {
             echo 'Pipeline completed successfully — app deployed to Kubernetes.'
