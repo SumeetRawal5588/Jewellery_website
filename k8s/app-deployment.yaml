@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: varahi-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: varahi-app
+  template:
+    metadata:
+      labels:
+        app: varahi-app
+    spec:
+      imagePullSecrets:
+        - name: ecr-secret
+      containers:
+        - name: varahi-app
+          image: 294060270764.dkr.ecr.ap-south-1.amazonaws.com/varahi-jewels-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: DATABASE_URL
+              value: postgresql://postgres:postgres@postgres:5432/varahi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: varahi-app
+spec:
+  type: NodePort
+  selector:
+    app: varahi-app
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30080
