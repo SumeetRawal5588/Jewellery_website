@@ -6,9 +6,9 @@ import { MapPin, Phone, Mail, Clock, Send, Diamond } from "lucide-react";
 import emailjs from '@emailjs/browser';
 
 const info = [
-  { icon: MapPin, label: "Visit Us", value: "77/79, Sutariya Building, 3rd Floor, Dhanji St, Zaveri Bazaar, Mumbai, Maharashtra 400003" },
-  { icon: Phone, label: "Call Us", value: "+91 8888625378" },
-  { icon: Mail, label: "Email Us", value: "varahijewelsmumbai@gmail.com" },
+  { icon: MapPin, label: "Visit Us", value: "123, Sample Building, 1st Floor, Demo Street, Example City, Sample State 123456" },
+  { icon: Phone, label: "Call Us", value: "+91 1234567890" },
+  { icon: Mail, label: "Email Us", value: "contact@example.com" },
   { icon: Clock, label: "Hours", value: "11:00 AM - 8:00 PM" },
 ];
 
@@ -31,7 +31,7 @@ export default function ContactPage() {
         from_name: `${formData.firstName} ${formData.lastName}`,
         from_email: formData.email,
         message: formData.message,
-        to_email: 'varahijewelsmumbai@gmail.com'
+        to_email: 'contact@example.com'
       };
 
       const response = await emailjs.send(
@@ -191,7 +191,7 @@ export default function ContactPage() {
             </h2>
             <div className="rounded-2xl overflow-hidden shadow-xl" style={{ border: "1px solid var(--border-color)" }}>
               <iframe
-                src="https://maps.google.com/maps?q=Varahi+Jewels%2C+77%2F79%2C+Sutariya+Building%2C+3rd+Floor%2C+Dhanji+St%2C+Zaveri+Bazaar%2C+Mumbai%2C+Maharashtra+400003&t=&z=18&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=Mumbai%2C+Maharashtra%2C+India&t=&z=18&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="450"
                 style={{ border: 0 }}

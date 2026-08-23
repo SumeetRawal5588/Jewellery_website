@@ -1,5 +1,8 @@
-import { readCollection, writeCollection } from "./db";
-import type { Product } from "./types";
+import { initializeDb } from "./postgres";
+import { insertItem, readCollection } from "./db";
+import type { Catalog, Product } from "./types";
+import fs from "fs";
+import path from "path";
 
 const defaultProducts: Product[] = [
   {
@@ -89,9 +92,52 @@ const defaultProducts: Product[] = [
   },
 ];
 
-export function seedProducts() {
-  const existing = readCollection<Product>("products");
-  if (existing.length === 0) {
-    writeCollection("products", defaultProducts);
+function loadJson<T>(fileName: string): T[] | null {
+  const filePath = path.join(process.cwd(), "data", fileName);
+  if (!fs.existsSync(filePath)) return null;
+  try {
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as T[]) : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function seedProducts() {
+  await initializeDb();
+  const existing = await readCollection<Product>("products");
+  if (existing.length > 0) return;
+
+  const migrated = loadJson<Product>("products.json");
+  if (migrated && migrated.length > 0) {
+    for (const product of migrated) {
+      await insertItem<Product>("products", {
+        ...product,
+        weight: product.weight ?? 0,
+        badge: product.badge || undefined,
+      });
+    }
+    return;
+  }
+
+  for (const product of defaultProducts) {
+    await insertItem<Product>("products", product);
+  }
+}
+
+export async function seedCatalogs() {
+  await initializeDb();
+  const existing = await readCollection<Catalog>("catalogs");
+  if (existing.length > 0) return;
+
+  const migrated = loadJson<Catalog>("catalogs.json");
+  if (migrated && migrated.length > 0) {
+    for (const catalog of migrated) {
+      await insertItem<Catalog>("catalogs", {
+        ...catalog,
+        productIds: catalog.productIds || [],
+      });
+    }
   }
 }

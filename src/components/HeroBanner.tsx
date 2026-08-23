@@ -41,7 +41,7 @@ export default function HeroBanner() {
           muted
           loop
           playsInline
-          poster="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop"
+          // poster="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1920&h=1080&fit=crop"
         >
           <source src="https://cdn.jsdelivr.net/gh/flowdudes/others@main/hero%20video-main.mp4" type="video/mp4" />
         </video>

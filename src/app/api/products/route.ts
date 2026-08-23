@@ -7,11 +7,11 @@ import type { Product } from "@/lib/types";
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
-  seedProducts();
+  await seedProducts();
   const { searchParams } = new URL(request.url);
   const category = searchParams.get("category");
 
-  let result = readCollection<Product>("products");
+  let result = await readCollection<Product>("products");
   if (category && category !== "All") {
     result = result.filter((p) => p.category === category);
   }
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    insertItem("products", product);
+    await insertItem("products", product);
     return NextResponse.json(product, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Invalid data" }, { status: 400 });
