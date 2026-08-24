@@ -1,6 +1,6 @@
 # Varahi Jewels — DevOps Pipeline Project
 
-A full-stack luxury jewellery e-commerce platform built with **Next.js** and **PostgreSQL**, deployed through a complete, production-style DevOps pipeline: containerization, infrastructure as code, Kubernetes orchestration, CI/CD automation, monitoring, and security scanning — all running on AWS.
+A full-stack luxury jewellery e-commerce platform built with **Next.js** and **PostgreSQL**, deployed through a complete, production-style DevOps pipeline: containerization, infrastructure as code, Kubernetes orchestration, CI/CD automation, monitoring, and security scanning — all running on AWS .
 
 This project was built to demonstrate end-to-end DevOps practices: from local development through to an automated, observable, cloud-native deployment.
 
