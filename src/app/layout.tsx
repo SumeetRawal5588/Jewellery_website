@@ -3,6 +3,9 @@ import { Playfair_Display, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import InstagramButton from "@/components/InstagramButton";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 const playfair = Playfair_Display({
@@ -38,6 +41,9 @@ export default function RootLayout({
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ScrollToTop />
+          <WhatsAppButton />
+          <InstagramButton />
         </ThemeProvider>
       </body>
     </html>

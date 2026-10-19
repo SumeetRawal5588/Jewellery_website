@@ -22,23 +22,24 @@
   --font-sans: var(--font-cormorant);
 }
 
-/* Light Theme (Default) */
+/* Light Theme (Default) — Royal Ivory & Gold */
 :root {
-  --bg-primary: #fdf8f0;
-  --bg-secondary: #f5ece0;
-  --bg-card: #ffffff;
-  --bg-accent: #fef9f0;
-  --text-primary: #3d2e1a;
-  --text-secondary: #7a6a52;
-  --text-muted: #a0917c;
-  --border-color: #e8d5b3;
-  --border-light: #f0e4d0;
-  --gold-primary: #c9a96e;
-  --gold-secondary: #b08d4c;
-  --gold-dark: #8b6914;
-  --nav-bg: rgba(253, 248, 240, 0.95);
-  --nav-text: #3d2e1a;
-  --card-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  --bg-primary: #fbf6ec;
+  --bg-secondary: #f3e9d6;
+  --bg-card: #fffdf8;
+  --bg-accent: #faf2e3;
+  --text-primary: #2e2414;
+  --text-secondary: #6b5a40;
+  --text-muted: #9a8a6e;
+  --border-color: #e6d3a8;
+  --border-light: #f1e6cf;
+  --gold-primary: #b8902f;
+  --gold-secondary: #a07a23;
+  --gold-dark: #7a5c16;
+  --gold-light: #d9b659;
+  --nav-bg: rgba(251, 246, 236, 0.96);
+  --nav-text: #2e2414;
+  --card-shadow: 0 6px 28px rgba(120, 90, 30, 0.08);
 }
 
 /* Dark Theme */
@@ -103,7 +104,7 @@ body {
 }
 
 .gold-gradient-text {
-  background: linear-gradient(135deg, var(--gold-secondary) 0%, var(--gold-primary) 50%, var(--gold-dark) 100%);
+  background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold-primary) 45%, var(--gold-light) 70%, var(--gold-secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -132,7 +133,7 @@ body {
 
 .luxury-card:hover {
   border-color: var(--gold-primary);
-  box-shadow: 0 24px 70px rgba(201,169,110,0.18);
+  box-shadow: 0 28px 80px rgba(184, 144, 47, 0.22), 0 2px 8px rgba(184, 144, 47, 0.08);
   transform: translateY(-8px) scale(1.01);
 }
 
@@ -143,7 +144,7 @@ body {
 
 .divider-gold {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+  background: linear-gradient(90deg, transparent, var(--gold-light), var(--gold-primary), var(--gold-light), transparent);
 }
 
 /* Golden shimmer animation for ornaments */
@@ -159,4 +160,42 @@ body {
 /* Smooth theme transition */
 *, *::before, *::after {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Skeleton shimmer used by loading states */
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer-bg {
+  background: linear-gradient(
+    90deg,
+    var(--bg-accent) 0%,
+    var(--border-light) 50%,
+    var(--bg-accent) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Smooth anchor scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Footer social icons */
+.social-icon:hover {
+  border-color: var(--gold-primary) !important;
+  color: var(--gold-primary) !important;
 }

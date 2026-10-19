@@ -7,7 +7,7 @@ export default function CollectionsPage() {
         <span className="text-xs tracking-[0.4em] uppercase block mb-4" style={{ color: "var(--gold-primary)" }}>
           Browse
         </span>
-        <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4">
+        <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4 leading-tight pb-2">
           Collections
         </h1>
         <p className="text-lg max-w-xl mx-auto font-light" style={{ color: "var(--text-secondary)" }}>

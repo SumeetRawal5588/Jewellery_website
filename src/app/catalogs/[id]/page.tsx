@@ -85,7 +85,7 @@ export default function CatalogDetailPage({
             <ArrowLeft className="w-3 h-3" />
             All Catalogs
           </Link>
-          <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4">
+          <h1 className="font-serif text-5xl md:text-6xl font-bold gold-gradient-text mb-4 leading-tight pb-2">
             {catalog.title}
           </h1>
           {catalog.description && (

@@ -2,13 +2,13 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Gem, Users, Globe, Award } from "lucide-react";
+import { Gem, Award, BadgeCheck, Wrench } from "lucide-react";
 
 const stats = [
-  { icon: Gem, value: "10,000+", label: "Pieces Crafted" },
-  { icon: Users, value: "50+", label: "Master Artisans" },
-  { icon: Globe, value: "40+", label: "Countries Served" },
-  { icon: Award, value: "130+", label: "Years of Excellence" },
+  { icon: Gem, value: "100%", label: "Crafted with Care" },
+  { icon: Award, value: "2026", label: "Established" },
+  { icon: BadgeCheck, value: "100%", label: "Certified Jewellery" },
+  { icon: Wrench, value: "Lifetime", label: "Product Service" },
 ];
 
 export default function AboutPage() {
@@ -19,11 +19,11 @@ export default function AboutPage() {
         <span className="text-xs tracking-[0.5em] uppercase block mb-4" style={{ color: "var(--gold-secondary)" }}>
           Our Story
         </span>
-        <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 gold-gradient-text">
+        <h1 className="font-serif text-5xl md:text-6xl font-bold mb-4 gold-gradient-text leading-tight pb-2">
           About VARAHI JEWELS
         </h1>
         <p className="text-lg max-w-xl mx-auto font-light" style={{ color: "var(--text-secondary)" }}>
-          A legacy of extraordinary craftsmanship since 1892.
+          A new chapter in craftsmanship, founded in Mumbai.
         </p>
       </div>
 
@@ -55,19 +55,20 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
           >
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6" style={{ color: "var(--text-primary)" }}>
-              A Century of <span className="gold-gradient-text">Brilliance</span>
+              A New <span className="gold-gradient-text">Beginning</span>
             </h2>
             <div className="h-px w-16 mb-6" style={{ background: "var(--gold-primary)" }} />
             <p className="text-lg leading-relaxed mb-6 font-light" style={{ color: "var(--text-secondary)" }}>
-              Founded in 1892 by master goldsmith Edouard Aurum in the heart of
-              Geneva, VARAHI JEWELS has been synonymous with uncompromising luxury for
-              over a century. What began as a small atelier has blossomed into
-              one of the world&apos;s most revered jewellery houses.
+              VARAHI JEWELS was founded on 1st January 2026 by Mr. Kishor Rawal
+              in the heart of Mumbai. Rooted in the city's vibrant jewellery
+              tradition, we are a homegrown brand dedicated to crafting
+              pieces that celebrate life's most precious moments.
             </p>
             <p className="text-lg leading-relaxed font-light" style={{ color: "var(--text-secondary)" }}>
-              Today, our fifth-generation artisans continue this proud legacy,
-              blending time-honoured techniques with modern innovation to create
-              pieces of breathtaking beauty that endure for generations.
+              Every creation is made with care and authenticity, reflecting
+              our commitment to quality and the trust of those who wear our
+              pieces. We are proud to be a Mumbai-based business serving our
+              local community.
             </p>
           </motion.div>
         </div>

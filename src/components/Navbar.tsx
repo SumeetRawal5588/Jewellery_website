@@ -20,6 +20,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const { theme, toggleTheme } = useTheme();
   const headerRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
@@ -29,8 +30,14 @@ export default function Navbar() {
   const useLightText = isHome && !scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 50);
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? Math.min(1, y / docHeight) : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
@@ -65,23 +72,34 @@ export default function Navbar() {
                 width={1024}
                 height={1024}
                 priority
-                className="h-24 w-auto"
+                className="h-20 lg:h-24 w-auto transition-all duration-500"
+                style={{
+                  filter: useLightText
+                    ? "brightness(0) invert(1)"
+                    : "brightness(0)",
+                }}
               />
             </Link>
 
             {/* Nav links */}
             <nav className="hidden lg:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="relative text-[13px] tracking-[0.15em] uppercase transition-colors duration-300 group font-medium"
-                  style={{ color: useLightText ? "#ffffff" : "var(--text-secondary)" }}
-                >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] rounded-full transition-all duration-300 group-hover:w-full" style={{ background: "var(--gold-primary)" }} />
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="relative text-[13px] tracking-[0.15em] uppercase transition-colors duration-300 group font-medium"
+                    style={{ color: isActive ? (useLightText ? "#ffffff" : "var(--gold-primary)") : (useLightText ? "#ffffff" : "var(--text-secondary)") }}
+                  >
+                    {link.label}
+                    <span
+                      className="absolute -bottom-1 left-0 h-[2px] rounded-full transition-all duration-300 group-hover:w-full"
+                      style={{ background: "var(--gold-primary)", width: isActive ? "100%" : "0" }}
+                    />
+                  </Link>
+                );
+              })}
             </nav>
 
             {/* Actions */}
@@ -89,7 +107,7 @@ export default function Navbar() {
               <button
                 onClick={toggleTheme}
                 className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
-                style={{ background: useLightText ? "rgba(255,255,255,0.15)" : "var(--bg-accent)", border: useLightText ? "1px solid rgba(255,255,255,0.3)" : "1px solid var(--border-color)", color: useLightText ? "#ffffff" : "var(--gold-primary)" }}
+                style={{ background: useLightText ? "rgba(255,255,255,0.15)" : "var(--bg-accent)", border: useLightText ? "1px solid rgba(255,255,255,0.3)" : "1px solid rgba(46,36,20,0.3)", color: useLightText ? "#ffffff" : "var(--text-primary)" }}
                 aria-label="Toggle theme"
               >
                 {theme === "light" ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
@@ -103,6 +121,16 @@ export default function Navbar() {
               </button>
             </div>
           </div>
+        </div>
+        {/* Scroll progress bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-[2px]" style={{ background: "transparent" }}>
+          <div
+            className="h-full origin-left transition-transform duration-75 ease-out"
+            style={{
+              transform: `scaleX(${scrollProgress})`,
+              background: "linear-gradient(90deg, var(--gold-dark), var(--gold-primary), var(--gold-light))",
+            }}
+          />
         </div>
       </header>
 
@@ -131,23 +159,30 @@ export default function Navbar() {
               >
                 {theme === "light" ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
               </button>
-              {navLinks.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.08 }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="font-serif text-2xl tracking-[0.1em] transition-colors"
-                    style={{ color: "var(--text-primary)" }}
+              {navLinks.map((link, i) => {
+                const isActive = pathname === link.href || (link.href !== "/" && pathname.startsWith(link.href));
+                return (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08 }}
+                    className="relative"
                   >
-                    {link.label}
-                  </Link>
-                </motion.div>
-              ))}
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="font-serif text-2xl tracking-[0.1em] transition-colors"
+                      style={{ color: isActive ? "var(--gold-primary)" : "var(--text-primary)" }}
+                    >
+                      {link.label}
+                    </Link>
+                    {isActive && (
+                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full" style={{ background: "var(--gold-primary)" }} />
+                    )}
+                  </motion.div>
+                );
+              })}
             </nav>
           </motion.div>
         )}
