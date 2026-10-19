@@ -54,7 +54,7 @@ const defaultProducts: Product[] = [
     category: "Necklaces",
     price: 3800,
     weight: 5,
-    image: "https://images.unsplash.com/photo-1515562141589-67f0d569b6c4?w=600&h=700&fit=crop",
+    image: "https://images.unsplash.com/photo-1598560917505-59a3ad559071?w=600&h=700&fit=crop",
     description: "Black onyx set in rose gold with diamond accents, a study in contrast.",
     createdAt: new Date().toISOString(),
   },
